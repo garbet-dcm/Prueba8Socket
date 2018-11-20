@@ -20,7 +20,7 @@ function renderizarUsuarios(personas) {
     divUsuarios.on('click', 'a', function() {
         var id = $(this).data('id'); //La nomenclarura para usarlo es data-id
         if (id) {
-
+            console.log(id); //Con esta id se podrían hacer conversaciones privadas
         }
     });
 }
