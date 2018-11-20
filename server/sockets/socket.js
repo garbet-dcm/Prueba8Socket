@@ -26,12 +26,15 @@ io.on('connection', (client) => {
         //Se mandan usuarios (de la sala) conectados en ese momento
         callback(usuarios.getPersonasPorSala(data.sala));
         //console.log(_usuarios);
+        client.broadcast.to(data.sala).emit('crearMensaje', crearMensaje('Administrador', `${data.nombre} entró al chat`));
     });
 
     //((4)) - Mensaje para todo el mundo
-    client.on('crearMensaje', (data) => {
+    client.on('crearMensaje', (data, callback) => {
         let _usuario = usuarios.getPersona(client.id);
-        client.broadcast.to(_usuario.sala).emit('crearMensaje', crearMensaje(_usuario.nombre, data.mensaje));
+        let mensaje = crearMensaje(_usuario.nombre, data.mensaje);
+        client.broadcast.to(_usuario.sala).emit('crearMensaje', mensaje);
+        callback(mensaje);
     });
 
     //Protocolo de desconexion de un usuario:

@@ -18,7 +18,8 @@ socket.on('connect', function() {
 
     //((1)) - Se reciben usuarios conectados en ese momento
     socket.emit('entrarChat', data_usuario, (res) => {
-        console.log('Usuarios conectados:', res);
+        //console.log('Usuarios conectados:', res);
+        renderizarUsuarios(res);
     });
 });
 
@@ -28,14 +29,17 @@ socket.on('disconnect', function() {
 });
 
 
-//((2))
+//((2)) - Escucha mensajes
 socket.on('crearMensaje', function(mensaje) {
-    console.log('Servidor:', mensaje);
+    //console.log('Servidor:', mensaje);
+    rendereizarMensajes(mensaje, false);
+    scrollBottom();
 });
 
 //((3)) - Se reciben usuarios conectados en ese momento
 socket.on('listaPersona', function(personas) {
-    console.log('Servidor (listaPersonasPorSala):', personas);
+    //console.log('Servidor (listaPersonasPorSala):', personas);
+    renderizarUsuarios(personas);
 });
 
 
@@ -43,10 +47,3 @@ socket.on('listaPersona', function(personas) {
 socket.on('mensajePrivado', (data) => {
     console.log('Mensaje privado:', data);
 });
-
-//((4))
-/*socket.emit('enviarMensaje', {
-
-}, () => {
-
-});*/
